@@ -14,29 +14,26 @@ func main () {
 	switch argsWithoutProg[0] {
 		case "show":
 			switch argsWithoutProg[1] {
-				default:
-					issueId, err := strconv.ParseInt(argsWithoutProg[1], 10, 32)
-					if err != nil {
-						printError(err)
-					}
-
-					response, err := showIssue(int(issueId))
-					if err != nil {
-						printError(err)
-					}
-
-					fmt.Println(response)
+				default: showIssueWithComments(argsWithoutProg[1])
 			}
 		default: fmt.Println("Command not recognised.")
 	}
 
 }
 
+/*-------------------*/
+/* UTILITY FUNCTIONS */
+/*-------------------*/
+
 func printError (err error) {
 	fmt.Printf("Fatal error: %v.", err)
 }
 
-func showIssue (issueId int) (string, error) {
+/*---------------*/
+/* API FUNCTIONS */
+/*---------------*/
+
+func getIssue (issueId int) (string, error) {
 	repositoryId := "8540679"
 
 	url, err := api.GenerateRequestUrl("get-single-issue", repositoryId, issueId)
@@ -49,4 +46,23 @@ func showIssue (issueId int) (string, error) {
 
 	body, err := io.ReadAll(response.Body)
 	return string(body), nil
+}
+
+/*-----------------------*/
+/* API COMMAND FUNCTIONS */
+/*-----------------------*/
+
+func showIssueWithComments (issueIdString string) {
+	// We try to convert the passed parameter to an int issueId.
+	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
+	if err != nil {
+		printError(err)
+	}
+
+	response, err := getIssue(int(issueId))
+	if err != nil {
+		printError(err)
+	}
+
+	fmt.Println(response)
 }
