@@ -21,12 +21,12 @@ type Issue struct {
 	Title string
 	Description string
 	State string
-	Created_at string
-	Updated_at string
+	Created_At string
+	Updated_At string
 	Author User
 	Assignee User
 	Labels []string
-	WebUrl string
+	Web_Url string
 }
 
 /*------------------------------*/

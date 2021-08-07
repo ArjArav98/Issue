@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/types"
+	"github.com/ArjArav98/Issue/src/format"
 )
 
 func main () {
@@ -74,10 +75,10 @@ func showIssueWithComments (issueIdString string) {
 		printError(err)
 	}
 
-	response, err := getIssue(int(issueId))
+	issue, err := getIssue(int(issueId))
 	if err != nil {
 		printError(err)
 	}
 
-	fmt.Println(response.Title)
+	fmt.Println(format.BeautifyIssue(issue))
 }
