@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	BearerToken string
+	HostUrl string
 	RepositoryName string
 }
 
