@@ -7,6 +7,7 @@ import (
 	//"json"
 	"net/http"
 	"github.com/ArjArav98/Issue/src/config"
+	"github.com/ArjArav98/Issue/src/api"
 )
 
 func main () {
@@ -24,9 +25,13 @@ func showIssue (issueId int) string {
 	token := configs.BearerToken
 	repositoryId := "8540679"
 
-	url := fmt.Sprintf("https://gitlab.com/api/v4/projects/%v/issues/%v", repositoryId, issueId)
+	url, err := api.GenerateUrl("get-single-issue")
 
-	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return fmt.Sprintf("%v", err)
+	}
+
+	req, err := http.NewRequest("GET", fmt.Sprintf(url, repositoryId, issueId), nil)
 
 	if err != nil {
 		return "oops"
