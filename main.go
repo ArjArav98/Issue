@@ -6,6 +6,7 @@ import (
 	"fmt"
 	//"json"
 	"net/http"
+	"github.com/ArjArav98/Issue/src/config"
 )
 
 func main () {
@@ -14,7 +15,13 @@ func main () {
 }
 
 func showIssue (issueId int) string {
-	token := "zBX_EB6cpPgv3sJ7Fm6g"
+	configs, err := config.Get()
+
+	if err != nil {
+		return fmt.Sprintf("%v", err)
+	}
+
+	token := configs.BearerToken
 	repositoryId := "8540679"
 
 	url := fmt.Sprintf("https://gitlab.com/api/v4/projects/%v/issues/%v", repositoryId, issueId)
