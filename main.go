@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strconv"
 	"github.com/ArjArav98/Issue/src/api"
+	"github.com/ArjArav98/Issue/src/types"
 )
 
 func main () {
@@ -33,19 +34,33 @@ func printError (err error) {
 /* API FUNCTIONS */
 /*---------------*/
 
-func getIssue (issueId int) (string, error) {
+func getIssue (issueId int) (types.Issue, error) {
 	repositoryId := "8540679"
+	var issue types.Issue
 
+	// We generate the request URL.
 	url, err := api.GenerateRequestUrl("get-single-issue", repositoryId, issueId)
 	if err != nil {
-		return "", err
+		return issue, err
 	}
 
+	// The GET request is performed with the URL.
 	response, err := api.PerformGetRequest(url)
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)
-	return string(body), nil
+	if err != nil {
+		return issue, err
+	}
+
+	// We convert the content into JSON
+	// and then into an Issue struct type.
+	err = issue.FromJson(body)
+	if err != nil {
+		return issue, err
+	}
+
+	return issue, nil
 }
 
 /*-----------------------*/
@@ -64,5 +79,5 @@ func showIssueWithComments (issueIdString string) {
 		printError(err)
 	}
 
-	fmt.Println(response)
+	fmt.Println(response.Title)
 }

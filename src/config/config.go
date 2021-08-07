@@ -12,6 +12,10 @@ type Config struct {
 	RepositoryName string
 }
 
+/*-------------------*/
+/* EXPOSED FUNCTIONS */
+/*-------------------*/
+
 func Get () (Config, error) {
 	var config Config
 	fileName := "config.json"
