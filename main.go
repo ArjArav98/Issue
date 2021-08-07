@@ -5,8 +5,6 @@ import (
 	"io"
 	"fmt"
 	//"json"
-	"net/http"
-	"github.com/ArjArav98/Issue/src/config"
 	"github.com/ArjArav98/Issue/src/api"
 )
 
@@ -16,38 +14,18 @@ func main () {
 }
 
 func showIssue (issueId int) string {
-	configs, err := config.Get()
-
-	if err != nil {
-		return fmt.Sprintf("%v", err)
-	}
-
-	token := configs.BearerToken
 	repositoryId := "8540679"
 
-	url, err := api.GenerateUrl("get-single-issue")
+	url, err := api.GenerateRequestUrl("get-single-issue", repositoryId, issueId)
 
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf(url, repositoryId, issueId), nil)
+	response, err := api.PerformGetRequest(url)
 
-	if err != nil {
-		return "oops"
-	}
-
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %v", token))
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
-	if err != nil {
-		return "oops2"
-	}
-
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+	defer response.Body.Close()
+	body, err := io.ReadAll(response.Body)
 
 	return string(body)
 }
