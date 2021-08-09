@@ -29,6 +29,14 @@ type Issue struct {
 	Web_Url string
 }
 
+type Project struct {
+	id uint64
+	name string
+	description string
+	visibility string
+	web_url string
+}
+
 /*------------------------------*/
 /* JSON UNMARSHALLING FUNCTIONS */
 /*------------------------------*/
@@ -36,7 +44,16 @@ type Issue struct {
 func (issue *Issue) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, issue)
 	if err != nil {
-		return errors.New("the raw data could not be parsed into JSON")
+		return errors.New("the raw data for an Issue could not be parsed into JSON")
+	}
+
+	return nil
+}
+
+func (project *Project) FromJson (stringContent []byte) error {
+	err := json.Unmarshal(stringContent, project)
+	if err != nil {
+		return errors.New("the raw data for a Project could not be parsed into JSON")
 	}
 
 	return nil

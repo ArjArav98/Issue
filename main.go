@@ -2,11 +2,9 @@ package main
 
 import (
 	"os"
-	"io"
 	"fmt"
 	"strconv"
 	"github.com/ArjArav98/Issue/src/api"
-	"github.com/ArjArav98/Issue/src/types"
 	"github.com/ArjArav98/Issue/src/format"
 )
 
@@ -23,47 +21,6 @@ func main () {
 
 }
 
-/*-------------------*/
-/* UTILITY FUNCTIONS */
-/*-------------------*/
-
-func printError (err error) {
-	fmt.Printf("Fatal error: %v.", err)
-}
-
-/*---------------*/
-/* API FUNCTIONS */
-/*---------------*/
-
-func getIssue (issueId int) (types.Issue, error) {
-	repositoryId := "8540679"
-	var issue types.Issue
-
-	// We generate the request URL.
-	url, err := api.GenerateRequestUrl("get-single-issue", repositoryId, issueId)
-	if err != nil {
-		return issue, err
-	}
-
-	// The GET request is performed with the URL.
-	response, err := api.PerformGetRequest(url)
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return issue, err
-	}
-
-	// We convert the content into JSON
-	// and then into an Issue struct type.
-	err = issue.FromJson(body)
-	if err != nil {
-		return issue, err
-	}
-
-	return issue, nil
-}
-
 /*-----------------------*/
 /* API COMMAND FUNCTIONS */
 /*-----------------------*/
@@ -75,10 +32,18 @@ func showIssueWithComments (issueIdString string) {
 		printError(err)
 	}
 
-	issue, err := getIssue(int(issueId))
+	issue, err := api.GetIssue(int(issueId))
 	if err != nil {
 		printError(err)
 	}
 
 	fmt.Println(format.BeautifyIssue(issue))
+}
+
+/*-------------------*/
+/* UTILITY FUNCTIONS */
+/*-------------------*/
+
+func printError (err error) {
+	fmt.Printf("Fatal error: %v.", err)
 }
