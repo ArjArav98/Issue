@@ -17,14 +17,17 @@ func main () {
 	}
 
 	if args[0] == "show" {
-		if onlyOneFurtherArgument(args[1:]) { // If only one, it is issueID.
+		if onlyOneFurtherArgument(args[1:]) {
 			if argumentNotNumeric(args[1]) {
 				fmt.Println("Command not recognised.")
 				return
 			}
+
+			// If only one argument, it must be issueID.
 			showIssueWithComments(args[1], true, true)
 			return
 		}
+
 		if args[1] == "--no-comments" {
 			showIssueWithComments(args[2], true, false)
 		}
