@@ -33,3 +33,37 @@ func BeautifyIssue (issue types.Issue) string {
 
 	return builder.String()
 }
+
+func BeautifyComments (comments []types.Comment) string {
+	var builder strings.Builder
+
+	builder.WriteString(`
+############
+# COMMENTS #
+############
+	`)
+
+	for iter:=0; iter<len(comments); iter++ {
+		builder.WriteString(BeautifyComment(comments[iter]))
+	}
+
+	return builder.String()
+}
+
+func BeautifyComment (comment types.Comment) string {
+	var builder strings.Builder
+
+	if !comment.SystemGenerated {
+		builder.WriteString(fmt.Sprintf(`
+%v COMMENTED AT %v,
+
+"%v"
+
+=+=+=+=+=+=+=
+=+=+=+=+=+=+=
+		`, strings.ToUpper(comment.Author.Name), comment.UpdatedAt, comment.Body))
+
+	}
+
+	return builder.String()
+}

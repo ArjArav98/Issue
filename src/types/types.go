@@ -34,7 +34,7 @@ type Comment struct {
 	Id uint64 `json:"id"`
 	Body string `json:"body"`
 	Author User `json:"author"`
-	System bool `json:"system"`
+	SystemGenerated bool `json:"system"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }

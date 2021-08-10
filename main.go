@@ -46,7 +46,7 @@ func showIssueWithComments (issueIdString string) {
 	}
 
 	fmt.Println(format.BeautifyIssue(issue))
-	fmt.Println(comments)
+	fmt.Println(format.BeautifyComments(comments))
 }
 
 /*-------------------*/
