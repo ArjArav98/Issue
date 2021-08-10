@@ -9,14 +9,28 @@ import (
 )
 
 func main () {
-	argsWithoutProg := os.Args[1:]
+	args := os.Args[1:]
 
-	switch argsWithoutProg[0] {
-		case "show":
-			switch argsWithoutProg[1] {
-				default: showIssueWithComments(argsWithoutProg[1])
+	if noFurtherArguments(args) || onlyOneFurtherArgument(args) {
+		fmt.Println("Command not recognised.")
+		return
+	}
+
+	if args[0] == "show" {
+		if onlyOneFurtherArgument(args[1:]) { // If only one, it is issueID.
+			if argumentNotNumeric(args[1]) {
+				fmt.Println("Command not recognised.")
+				return
 			}
-		default: fmt.Println("Command not recognised.")
+			showIssueWithComments(args[1], true, true)
+			return
+		}
+		if args[1] == "--no-comments" {
+			showIssueWithComments(args[2], true, false)
+		}
+		if args[1] == "--only-comments" {
+			showIssueWithComments(args[2], false, true)
+		}
 	}
 
 }
@@ -25,7 +39,7 @@ func main () {
 /* API COMMAND FUNCTIONS */
 /*-----------------------*/
 
-func showIssueWithComments (issueIdString string) {
+func showIssueWithComments (issueIdString string, showIssue bool, showComments bool) {
 	// We try to convert the passed parameter to an int issueId.
 	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
 	if err != nil {
@@ -33,6 +47,7 @@ func showIssueWithComments (issueIdString string) {
 		return
 	}
 
+	// We call the API functions.
 	issue, err := api.GetIssue(uint64(issueId))
 	if err != nil {
 		printError(err)
@@ -45,13 +60,31 @@ func showIssueWithComments (issueIdString string) {
 		return
 	}
 
-	fmt.Println(format.BeautifyIssue(issue))
-	fmt.Println(format.BeautifyComments(comments))
+	// We format and display them.
+	if showIssue {
+		fmt.Println(format.BeautifyIssue(issue))
+	}
+	if showComments {
+		fmt.Println(format.BeautifyComments(comments))
+	}
 }
 
 /*-------------------*/
 /* UTILITY FUNCTIONS */
 /*-------------------*/
+
+func noFurtherArguments (args []string) bool {
+	return len(args) == 0
+}
+
+func onlyOneFurtherArgument (args []string) bool {
+	return len(args) == 1
+}
+
+func argumentNotNumeric (argument string) bool {
+	_, err := strconv.ParseFloat(argument, 10)
+	return err != nil
+}
 
 func printError (err error) {
 	fmt.Printf("Fatal error: %v.\n", err)
