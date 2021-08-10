@@ -26,16 +26,22 @@ var gitlabApiEndpoints map[string]string = map[string]string{
 /*-----------------------*/
 
 func GetIssue (issueId int) (types.Issue, error) {
-	repositoryId := "8540679"
+	/* Get Necessary Information */
+
 	var issue types.Issue
 
-	// We generate the request URL.
-	url, err := generateRequestUrl("get-single-issue", repositoryId, issueId)
+	repository, err := GetRepositoryInformation()
 	if err != nil {
 		return issue, err
 	}
 
-	// The GET request is performed with the URL.
+	/* Request Generation and Calling */
+
+	url, err := generateRequestUrl("get-single-issue", repository.Id, issueId)
+	if err != nil {
+		return issue, err
+	}
+
 	response, err := performGetRequest(url)
 	defer response.Body.Close()
 
@@ -44,8 +50,8 @@ func GetIssue (issueId int) (types.Issue, error) {
 		return issue, err
 	}
 
-	// We convert the content into JSON
-	// and then into an Issue struct type.
+	/* JSON Unmarshalling and Return */
+
 	err = issue.FromJson(body)
 	if err != nil {
 		return issue, err
@@ -55,32 +61,37 @@ func GetIssue (issueId int) (types.Issue, error) {
 }
 
 func GetRepositoryInformation () (types.Project, error) {
+	/* Get Necessary Information */
+
 	var project types.Project
 
-	// We get the project namespace.
 	config, err := config.Get()
 	if err != nil {
 		return project, nil
 	}
 
-	// We generate the request URL.
+	/* Request Generation and Calling */
+
 	url, err := generateRequestUrl("get-project-information",
 					url.QueryEscape(config.RepositoryNamespace))
 	if err != nil {
 		return project, err
 	}
 
-	// The GET request is performed with the URL.
 	response, err := performGetRequest(url)
 	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return project, errors.New("the repository information could not be retrieved")
+	}
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return project, err
 	}
 
-	// We convert the content into JSON
-	// and then into an Project struct type.
+	/* JSON Unmarshalling and Return */
+
 	err = project.FromJson(body)
 	if err != nil {
 		return project, err
