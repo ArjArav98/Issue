@@ -72,9 +72,9 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 	}
 }
 
-/*-------------------*/
-/* UTILITY FUNCTIONS */
-/*-------------------*/
+/*-----------------*/
+/* CHECK FUNCTIONS */
+/*-----------------*/
 
 func noFurtherArguments (args []string) bool {
 	return len(args) == 0
@@ -87,6 +87,14 @@ func onlyOneFurtherArgument (args []string) bool {
 func argumentNotNumeric (argument string) bool {
 	_, err := strconv.ParseFloat(argument, 10)
 	return err != nil
+}
+
+/*-----------------*/
+/* ERROR FUNCTIONS */
+/*-----------------*/
+
+func showHelpMenu () {
+	fmt.Println("Usage: issue COMMAND [OPTION] [ISSUE_ID]")
 }
 
 func printError (err error) {
