@@ -29,12 +29,20 @@ type Issue struct {
 	Web_Url string
 }
 
+type Comment struct {
+	Id uint64
+	Body string
+	Author User
+	Created_At string
+	Updated_At string
+}
+
 type Project struct {
-	id uint64
-	name string
-	description string
-	visibility string
-	web_url string
+	Id uint64
+	Name string
+	Description string
+	Visibility string
+	Web_Url string
 }
 
 /*------------------------------*/
