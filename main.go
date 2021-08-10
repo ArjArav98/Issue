@@ -30,14 +30,23 @@ func showIssueWithComments (issueIdString string) {
 	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
 	if err != nil {
 		printError(err)
+		return
 	}
 
-	issue, err := api.GetIssue(int(issueId))
+	issue, err := api.GetIssue(uint64(issueId))
 	if err != nil {
 		printError(err)
+		return
+	}
+
+	comments, err := api.GetComments(issue.Iid, issue.Project_Id)
+	if err != nil {
+		printError(err)
+		return
 	}
 
 	fmt.Println(format.BeautifyIssue(issue))
+	fmt.Println(comments)
 }
 
 /*-------------------*/
@@ -45,5 +54,5 @@ func showIssueWithComments (issueIdString string) {
 /*-------------------*/
 
 func printError (err error) {
-	fmt.Printf("Fatal error: %v.", err)
+	fmt.Printf("Fatal error: %v.\n", err)
 }

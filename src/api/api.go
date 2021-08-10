@@ -26,7 +26,7 @@ var gitlabApiEndpoints map[string]string = map[string]string{
 /* EXPOSED API FUNCTIONS */
 /*-----------------------*/
 
-func GetIssue (issueId int) (types.Issue, error) {
+func GetIssue (issueId uint64) (types.Issue, error) {
 	/* Get Necessary Information */
 
 	var issue types.Issue
@@ -61,8 +61,8 @@ func GetIssue (issueId int) (types.Issue, error) {
 	return issue, nil
 }
 
-func GetComments (issueIid int, repositoryId int) (types.Comments, error) {
-	var comments types.Comments
+func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error) {
+	var comments []types.Comment
 
 	/* Request Generation and Calling */
 
@@ -81,7 +81,7 @@ func GetComments (issueIid int, repositoryId int) (types.Comments, error) {
 
 	/* JSON Unmarshalling and Return */
 
-	err = comments.FromJson(body)
+	err = types.CommentsFromJson(body, &comments)
 	if err != nil {
 		return comments, err
 	}

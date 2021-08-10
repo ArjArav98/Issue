@@ -27,18 +27,16 @@ type Issue struct {
 	Assignee User
 	Labels []string
 	Web_Url string
+	Project_Id uint64
 }
 
 type Comment struct {
 	Id uint64
 	Body string
 	Author User
+	System bool
 	Created_At string
 	Updated_At string
-}
-
-type Comments struct {
-	Comments []Comment
 }
 
 type Project struct {
@@ -71,19 +69,20 @@ func (comment *Comment) FromJson (stringContent []byte) error {
 	return nil
 }
 
-func (comments *Comments) FromJson (stringContent []byte) error {
-	err := json.Unmarshal(stringContent, comments)
+func (project *Project) FromJson (stringContent []byte) error {
+	err := json.Unmarshal(stringContent, project)
 	if err != nil {
-		return errors.New("the raw data for Comments could not be parsed into JSON")
+		return errors.New("the raw data for a Project could not be parsed into JSON")
 	}
 
 	return nil
 }
 
-func (project *Project) FromJson (stringContent []byte) error {
-	err := json.Unmarshal(stringContent, project)
+/* We require a different func signature since []Comment isn't a defined type. */
+func CommentsFromJson (stringContent []byte, comments *[]Comment) error {
+	err := json.Unmarshal(stringContent, comments)
 	if err != nil {
-		return errors.New("the raw data for a Project could not be parsed into JSON")
+		return errors.New("the raw data for Comments could not be parsed into JSON")
 	}
 
 	return nil
