@@ -39,7 +39,7 @@ func showIssueWithComments (issueIdString string) {
 		return
 	}
 
-	comments, err := api.GetComments(issue.Iid, issue.Project_Id)
+	comments, err := api.GetComments(issue.Iid, issue.ProjectId)
 	if err != nil {
 		printError(err)
 		return

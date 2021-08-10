@@ -29,7 +29,7 @@ func BeautifyIssue (issue types.Issue) string {
 %s
 	`, issue.Iid, issue.Title, issue.State, strings.Join(issue.Labels, ", "),
 	   issue.Assignee.Name, issue.Assignee.Username, issue.Author.Name, issue.Author.Username,
-	   issue.Created_At, issue.Web_Url, issue.Description))
+	   issue.CreatedAt, issue.WebUrl, issue.Description))
 
 	return builder.String()
 }

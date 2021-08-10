@@ -10,41 +10,41 @@ import (
 /*-------*/
 
 type User struct {
-	Id uint64
-	Name string
-	Username string
+	Id uint64 `json:"id"`
+	Name string `json:"name"`
+	Username string `json:"username"`
 }
 
 type Issue struct {
-	Id uint64
-	Iid uint64
-	Title string
-	Description string
-	State string
-	Created_At string
-	Updated_At string
-	Author User
-	Assignee User
-	Labels []string
-	Web_Url string
-	Project_Id uint64
+	Id uint64 `json:"id"`
+	Iid uint64 `json:"iid"`
+	Title string `json:"title"`
+	Description string `json:"description"`
+	State string `json:"state"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+	Author User `json:"author"`
+	Assignee User `json:"assignee"`
+	Labels []string `json:"labels"`
+	WebUrl string `json:"web_url"`
+	ProjectId uint64 `json:"project_id"`
 }
 
 type Comment struct {
-	Id uint64
-	Body string
-	Author User
-	System bool
-	Created_At string
-	Updated_At string
+	Id uint64 `json:"id"`
+	Body string `json:"body"`
+	Author User `json:"author"`
+	System bool `json:"system"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 type Project struct {
-	Id uint64
-	Name string
-	Description string
-	Visibility string
-	Web_Url string
+	Id uint64 `json:"id"`
+	Name string `json:"name"`
+	Description string `json:"description"`
+	Visibility string `json:"visibility"`
+	WebUrl string `json:"web_url"`
 }
 
 /*------------------------------*/
