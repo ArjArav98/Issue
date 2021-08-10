@@ -37,6 +37,10 @@ type Comment struct {
 	Updated_At string
 }
 
+type Comments struct {
+	Comments []Comment
+}
+
 type Project struct {
 	Id uint64
 	Name string
@@ -53,6 +57,24 @@ func (issue *Issue) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, issue)
 	if err != nil {
 		return errors.New("the raw data for an Issue could not be parsed into JSON")
+	}
+
+	return nil
+}
+
+func (comment *Comment) FromJson (stringContent []byte) error {
+	err := json.Unmarshal(stringContent, comment)
+	if err != nil {
+		return errors.New("the raw data for a Comment could not be parsed into JSON")
+	}
+
+	return nil
+}
+
+func (comments *Comments) FromJson (stringContent []byte) error {
+	err := json.Unmarshal(stringContent, comments)
+	if err != nil {
+		return errors.New("the raw data for Comments could not be parsed into JSON")
 	}
 
 	return nil

@@ -19,6 +19,7 @@ const apiVersion string = "/api/v4"
 var gitlabApiEndpoints map[string]string = map[string]string{
 	"get-single-issue": "/projects/%v/issues/%v",
 	"get-project-information": "/projects/%v",
+	"get-issue-comments": "/projects/%v/issues/%v/notes?sort=asc&order_by=updated_at",
 }
 
 /*-----------------------*/
@@ -58,6 +59,34 @@ func GetIssue (issueId int) (types.Issue, error) {
 	}
 
 	return issue, nil
+}
+
+func GetComments (issueIid int, repositoryId int) (types.Comments, error) {
+	var comments types.Comments
+
+	/* Request Generation and Calling */
+
+	url, err := generateRequestUrl("get-issue-comments", repositoryId, issueIid)
+	if err != nil {
+		return comments, err
+	}
+
+	response, err := performGetRequest(url)
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return comments, err
+	}
+
+	/* JSON Unmarshalling and Return */
+
+	err = comments.FromJson(body)
+	if err != nil {
+		return comments, err
+	}
+
+	return comments, nil
 }
 
 func GetRepositoryInformation () (types.Project, error) {
