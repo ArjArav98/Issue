@@ -36,6 +36,7 @@ func BeautifyIssue (issue types.Issue) string {
 
 func BeautifyComments (comments []types.Comment) string {
 	var builder strings.Builder
+	var userCommentsCount int = 0
 
 	builder.WriteString(`
 ############
@@ -44,7 +45,15 @@ func BeautifyComments (comments []types.Comment) string {
 	`)
 
 	for iter:=0; iter<len(comments); iter++ {
-		builder.WriteString(BeautifyComment(comments[iter]))
+		// We don't display system generated comments.
+		if comments[iter].SystemGenerated == false {
+			builder.WriteString(BeautifyComment(comments[iter]))
+			userCommentsCount++
+		}
+	}
+
+	if userCommentsCount == 0 {
+		builder.WriteString("\nNo comments.")
 	}
 
 	return builder.String()
@@ -53,17 +62,15 @@ func BeautifyComments (comments []types.Comment) string {
 func BeautifyComment (comment types.Comment) string {
 	var builder strings.Builder
 
-	if !comment.SystemGenerated {
-		builder.WriteString(fmt.Sprintf(`
+	builder.WriteString(fmt.Sprintf(`
 %v COMMENTED AT %v,
 
 "%v"
 
 =+=+=+=+=+=+=
 =+=+=+=+=+=+=
-		`, strings.ToUpper(comment.Author.Name), comment.UpdatedAt, comment.Body))
+	`, strings.ToUpper(comment.Author.Name), comment.UpdatedAt, comment.Body))
 
-	}
 
 	return builder.String()
 }
