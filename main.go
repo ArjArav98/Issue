@@ -47,11 +47,6 @@ func main () {
 	}
 
 	if args[0] == "list" {
-		if noFurtherArguments(args[1:]) {
-			showAllIssues(args[1:])
-			return
-		}
-
 		showAllIssues(args[1:])
 	} else {
 		printError(errors.New("Command not recognised"))
