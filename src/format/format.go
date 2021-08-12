@@ -6,9 +6,9 @@ import (
 	"github.com/ArjArav98/Issue/src/types"
 )
 
-/*-------------------*/
-/* EXPOSED FUNCTIONS */
-/*-------------------*/
+/*---------------------------*/
+/* EXPOSED DISPLAY FUNCTIONS */
+/*---------------------------*/
 
 func BeautifyIssue (issue types.Issue) string {
 	var builder strings.Builder

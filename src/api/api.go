@@ -19,7 +19,8 @@ const apiVersion string = "/api/v4"
 var gitlabApiEndpoints map[string]string = map[string]string{
 	"get-single-issue": "/projects/%v/issues/%v",
 	"get-project-information": "/projects/%v",
-	"get-issue-comments": "/projects/%v/issues/%v/notes?sort=asc&page=1&per_page=100",
+	"get-issue-comments": "/projects/%v/issues/%v/notes",
+	"list-issues": "/projects/%v/issues",
 }
 
 /*-----------------------*/
@@ -27,18 +28,22 @@ var gitlabApiEndpoints map[string]string = map[string]string{
 /*-----------------------*/
 
 func GetIssue (issueId uint64) (types.Issue, error) {
-	/* Get Necessary Information */
+	/*== @section ===========*/
+	/*=======================*/
 
 	var issue types.Issue
+	queryParams := url.Values{}
 
 	repository, err := GetRepositoryInformation()
 	if err != nil {
 		return issue, err
 	}
 
-	/* Request Generation and Calling */
+	/*== @section ===========*/
+	/*=======================*/
 
-	url, err := generateRequestUrl("get-single-issue", repository.Id, issueId)
+	url, err := generateRequestUrl("get-single-issue", queryParams,
+					repository.Id, issueId)
 	if err != nil {
 		return issue, err
 	}
@@ -51,7 +56,8 @@ func GetIssue (issueId uint64) (types.Issue, error) {
 		return issue, err
 	}
 
-	/* JSON Unmarshalling and Return */
+	/*== @section ===========*/
+	/*=======================*/
 
 	err = issue.FromJson(body)
 	if err != nil {
@@ -61,12 +67,56 @@ func GetIssue (issueId uint64) (types.Issue, error) {
 	return issue, nil
 }
 
+func GetIssues (searchParams url.Values) ([]types.Issue, error) {
+	/*== @section ===========*/
+	/*=======================*/
+
+	var issues []types.Issue
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	url, err := generateRequestUrl("get-issue-issues", queryParams,
+					repositoryId, issueIid)
+	if err != nil {
+		return issues, err
+	}
+
+	response, err := performGetRequest(url)
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return issues, err
+	}
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	err = types.IssuesFromJson(body, &issues)
+	if err != nil {
+		return issues, err
+	}
+
+	return issues, nil
+}
+
 func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error) {
+	/*== @section ===========*/
+	/*=======================*/
+
 	var comments []types.Comment
+	queryParams := url.Values{}
 
-	/* Request Generation and Calling */
+	queryParams.Add("sort", "asc")
+	queryParams.Add("page", "1")
+	queryParams.Add("per_page", "100")
 
-	url, err := generateRequestUrl("get-issue-comments", repositoryId, issueIid)
+	/*== @section ===========*/
+	/*=======================*/
+
+	url, err := generateRequestUrl("get-issue-comments", queryParams,
+					repositoryId, issueIid)
 	if err != nil {
 		return comments, err
 	}
@@ -79,7 +129,8 @@ func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error)
 		return comments, err
 	}
 
-	/* JSON Unmarshalling and Return */
+	/*== @section ===========*/
+	/*=======================*/
 
 	err = types.CommentsFromJson(body, &comments)
 	if err != nil {
@@ -90,18 +141,21 @@ func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error)
 }
 
 func GetRepositoryInformation () (types.Project, error) {
-	/* Get Necessary Information */
+	/*== @section ===========*/
+	/*=======================*/
 
 	var project types.Project
+	queryParams := url.Values{}
 
 	config, err := config.Get()
 	if err != nil {
 		return project, nil
 	}
 
-	/* Request Generation and Calling */
+	/*== @section ===========*/
+	/*=======================*/
 
-	url, err := generateRequestUrl("get-project-information",
+	url, err := generateRequestUrl("get-project-information", queryParams,
 					url.QueryEscape(config.RepositoryNamespace))
 	if err != nil {
 		return project, err
@@ -119,7 +173,8 @@ func GetRepositoryInformation () (types.Project, error) {
 		return project, err
 	}
 
-	/* JSON Unmarshalling and Return */
+	/*== @section ===========*/
+	/*=======================*/
 
 	err = project.FromJson(body)
 	if err != nil {
@@ -143,7 +198,7 @@ func hostUrl () (string, error) {
 	return config.HostUrl, nil
 }
 
-func generateRequestUrl (endpointKey string, endpointSubstitutionParams ...interface{}) (string, error) {
+func generateRequestUrl (endpointKey string, queryParams url.Values, endpointSubstitutionParams ...interface{}) (string, error) {
 	endpointUrl, urlPresent := gitlabApiEndpoints[endpointKey]
 
 	if !urlPresent {
@@ -157,7 +212,7 @@ func generateRequestUrl (endpointKey string, endpointSubstitutionParams ...inter
 	}
 
 	endpointUrl = fmt.Sprintf(endpointUrl, endpointSubstitutionParams...)
-	return fmt.Sprintf("%v%v%v", host, apiVersion, endpointUrl), nil
+	return fmt.Sprintf("%v%v%v?%v", host, apiVersion, endpointUrl, queryParams.Encode()), nil
 }
 
 /*-------------------------------*/
