@@ -101,6 +101,10 @@ func GetIssues (searchParams url.Values) ([]types.Issue, error) {
 		return issues, err
 	}
 
+	if response.StatusCode != 200 {
+		return issues, errors.New(string(body))
+	}
+
 	/*== @section ===========*/
 	/*=======================*/
 
@@ -181,13 +185,13 @@ func GetRepositoryInformation () (types.Project, error) {
 	}
 	defer response.Body.Close()
 
-	if response.StatusCode != 200 {
-		return project, errors.New("The repository information could not be retrieved")
-	}
-
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return project, err
+	}
+
+	if response.StatusCode != 200 {
+		return project, errors.New(string(body))
 	}
 
 	/*== @section ===========*/
