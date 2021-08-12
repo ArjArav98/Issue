@@ -50,6 +50,9 @@ func GetIssue (issueId uint64) (types.Issue, error) {
 	}
 
 	response, err := performGetRequest(url)
+	if err != nil {
+		return issue, err
+	}
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)
@@ -130,6 +133,9 @@ func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error)
 	}
 
 	response, err := performGetRequest(url)
+	if err != nil {
+		return comments, err
+	}
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)
@@ -170,6 +176,9 @@ func GetRepositoryInformation () (types.Project, error) {
 	}
 
 	response, err := performGetRequest(url)
+	if err != nil {
+		return project, err
+	}
 	defer response.Body.Close()
 
 	if response.StatusCode != 200 {
@@ -208,6 +217,9 @@ func GetCurrentUser () (types.User, error) {
 	}
 
 	response, err := performGetRequest(url)
+	if err != nil {
+		return user, err
+	}
 	defer response.Body.Close()
 
 	if response.StatusCode != 200 {
