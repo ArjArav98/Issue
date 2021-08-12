@@ -54,7 +54,7 @@ type Project struct {
 func (issue *Issue) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, issue)
 	if err != nil {
-		return errors.New("the raw data for an Issue could not be parsed into JSON")
+		return errors.New("The raw data for an Issue could not be parsed into JSON")
 	}
 
 	return nil
@@ -63,7 +63,7 @@ func (issue *Issue) FromJson (stringContent []byte) error {
 func (comment *Comment) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, comment)
 	if err != nil {
-		return errors.New("the raw data for a Comment could not be parsed into JSON")
+		return errors.New("The raw data for a Comment could not be parsed into JSON")
 	}
 
 	return nil
@@ -72,17 +72,33 @@ func (comment *Comment) FromJson (stringContent []byte) error {
 func (project *Project) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, project)
 	if err != nil {
-		return errors.New("the raw data for a Project could not be parsed into JSON")
+		return errors.New("The raw data for a Project could not be parsed into JSON")
 	}
 
 	return nil
 }
 
-/* We require a different func signature since []Comment isn't a defined type. */
+
+/*------------------------------------------*/
+/* JSON UNMARSHALLING FUNCTION (TYPE LISTS) */
+/*------------------------------------------*/
+
+/* We require a different func signature since type lists 
+   aren't a defined type. */
+
+func IssuesFromJson (stringContent []byte, issues *[]Issue) error {
+	err := json.Unmarshal(stringContent, issues)
+	if err != nil {
+		return errors.New("The raw data for Issues could not be parsed into JSON")
+	}
+
+	return nil
+}
+
 func CommentsFromJson (stringContent []byte, comments *[]Comment) error {
 	err := json.Unmarshal(stringContent, comments)
 	if err != nil {
-		return errors.New("the raw data for Comments could not be parsed into JSON")
+		return errors.New("The raw data for Comments could not be parsed into JSON")
 	}
 
 	return nil

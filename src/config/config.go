@@ -22,17 +22,17 @@ func Get () (Config, error) {
 	contents, err := ioutil.ReadFile(fileName)
 
 	if err != nil {
-		return config, errors.New("the config file for this repository could not be found")
+		return config, errors.New("The config file for this repository could not be found")
 	}
 
 	if !json.Valid(contents) {
-		return config, errors.New("the config file contains invalid JSON")
+		return config, errors.New("The config file contains invalid JSON")
 	}
 
 	err = json.Unmarshal(contents, &config)
 
 	if err != nil {
-		return config, errors.New("the config file for this repository could not be parsed")
+		return config, errors.New("The config file for this repository could not be parsed")
 	}
 
 	return config, nil

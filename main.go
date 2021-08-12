@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 	"strconv"
+	"errors"
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
 )
@@ -12,14 +13,14 @@ func main () {
 	args := os.Args[1:]
 
 	if noFurtherArguments(args) || onlyOneFurtherArgument(args) {
-		fmt.Println("Command not recognised.")
+		printError(errors.New("Command not recognised"))
 		return
 	}
 
 	if args[0] == "show" {
 		if onlyOneFurtherArgument(args[1:]) {
 			if argumentNotNumeric(args[1]) {
-				fmt.Println("Command not recognised.")
+				printError(errors.New("Command not recognised"))
 				return
 			}
 
@@ -34,8 +35,11 @@ func main () {
 		if args[1] == "--only-comments" {
 			showIssueWithComments(args[2], false, true)
 		}
-	}
 
+		printError(errors.New("Command not recognised"))
+	} else {
+		printError(errors.New("Command not recognised"))
+	}
 }
 
 /*-----------------------*/
@@ -98,5 +102,5 @@ func showHelpMenu () {
 }
 
 func printError (err error) {
-	fmt.Printf("Fatal error: %v.\n", err)
+	fmt.Printf("ERROR: %v.\n", err)
 }

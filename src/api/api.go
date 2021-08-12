@@ -165,7 +165,7 @@ func GetRepositoryInformation () (types.Project, error) {
 	defer response.Body.Close()
 
 	if response.StatusCode != 200 {
-		return project, errors.New("the repository information could not be retrieved")
+		return project, errors.New("The repository information could not be retrieved")
 	}
 
 	body, err := io.ReadAll(response.Body)
@@ -202,7 +202,7 @@ func generateRequestUrl (endpointKey string, queryParams url.Values, endpointSub
 	endpointUrl, urlPresent := gitlabApiEndpoints[endpointKey]
 
 	if !urlPresent {
-		return "", errors.New("the endpoint URL has not been configured")
+		return "", errors.New("The endpoint URL has not been configured")
 	}
 
 	host, err := hostUrl()
@@ -235,7 +235,7 @@ func performGetRequest (url string) (*http.Response, error) {
 
 	response, err := client.Do(request)
 	if err != nil {
-		return nil, errors.New("this gitlab operation was not able to be performed")
+		return nil, errors.New("This gitlab operation was not able to be performed")
 	}
 
 	return response, nil
