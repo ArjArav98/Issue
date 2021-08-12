@@ -74,15 +74,23 @@ func GetIssues (searchParams url.Values) ([]types.Issue, error) {
 
 	var issues []types.Issue
 
+	repository, err := GetRepositoryInformation()
+	if err != nil {
+		return issues, err
+	}
+
 	/*== @section ===========*/
 	/*=======================*/
 
-	url, err := generateRequestUrl("get-issues", searchParams)
+	url, err := generateRequestUrl("list-issues", searchParams, repository.Id)
 	if err != nil {
 		return issues, err
 	}
 
 	response, err := performGetRequest(url)
+	if err != nil {
+		return issues, err
+	}
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)

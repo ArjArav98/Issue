@@ -7,20 +7,26 @@ import (
 	"errors"
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
+	"github.com/ArjArav98/Issue/src/parse"
 )
 
 func main () {
 	args := os.Args[1:]
 
-	if noFurtherArguments(args) || onlyOneFurtherArgument(args) {
-		printError(errors.New("Command not recognised"))
+	if noFurtherArguments(args) {
+		printError(errors.New("Command needs at least one argument"))
 		return
 	}
 
 	if args[0] == "show" {
+		if noFurtherArguments(args[1:]) {
+			printError(errors.New("Command needs at least one more argument"))
+			return
+		}
+
 		if onlyOneFurtherArgument(args[1:]) {
 			if argumentNotNumeric(args[1]) {
-				printError(errors.New("Command not recognised"))
+				printError(errors.New("The last argument must be a valid integer ID"))
 				return
 			}
 
@@ -37,6 +43,16 @@ func main () {
 		}
 
 		printError(errors.New("Command not recognised"))
+		return
+	}
+
+	if args[0] == "list" {
+		if noFurtherArguments(args[1:]) {
+			showAllIssues(args[1:])
+			return
+		}
+
+		showAllIssues(args[1:])
 	} else {
 		printError(errors.New("Command not recognised"))
 	}
@@ -47,14 +63,18 @@ func main () {
 /*-----------------------*/
 
 func showIssueWithComments (issueIdString string, showIssue bool, showComments bool) {
-	// We try to convert the passed parameter to an int issueId.
+	/*== @section ===========*/
+	/*=======================*/
+
 	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
 	if err != nil {
-		printError("Issue ID must be a valid number")
+		printError(errors.New("Issue ID must be a valid number"))
 		return
 	}
 
-	// We call the API functions.
+	/*== @section ===========*/
+	/*=======================*/
+
 	issue, err := api.GetIssue(uint64(issueId))
 	if err != nil {
 		printError(err)
@@ -67,7 +87,9 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 		return
 	}
 
-	// We format and display them.
+	/*== @section ===========*/
+	/*=======================*/
+
 	if showIssue {
 		fmt.Println(format.BeautifyIssue(issue))
 	}
@@ -76,8 +98,29 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 	}
 }
 
-func showAllIssues (extraSearchArgs []string) {
-	
+func showAllIssues (searchArgs []string) {
+	/*== @section ===========*/
+	/*=======================*/
+
+	queryParams, err := parse.CliArgumentsToQueryParams(searchArgs)
+	if err!=nil {
+		printError(err)
+		return
+	}
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	issues, err := api.GetIssues(queryParams)
+	if err!= nil {
+		printError(err)
+		return
+	}
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	fmt.Println(issues)
 }
 
 /*-----------------*/
