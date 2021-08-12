@@ -19,7 +19,7 @@ const apiVersion string = "/api/v4"
 var gitlabApiEndpoints map[string]string = map[string]string{
 	"get-single-issue": "/projects/%v/issues/%v",
 	"get-project-information": "/projects/%v",
-	"get-issue-comments": "/projects/%v/issues/%v/notes",
+	"get-issue-comments": "/projects/%v/issues/%v/notes?sort=asc&page=1&per_page=100",
 }
 
 /*-----------------------*/
