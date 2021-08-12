@@ -50,7 +50,7 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 	// We try to convert the passed parameter to an int issueId.
 	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
 	if err != nil {
-		printError(err)
+		printError("Issue ID must be a valid number")
 		return
 	}
 
@@ -74,6 +74,10 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 	if showComments {
 		fmt.Println(format.BeautifyComments(comments))
 	}
+}
+
+func showAllIssues (extraSearchArgs []string) {
+	
 }
 
 /*-----------------*/
