@@ -55,9 +55,16 @@ func GetIssue (issueId uint64) (types.Issue, error) {
 	}
 	defer response.Body.Close()
 
+	/*== @section ===========*/
+	/*=======================*/
+
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return issue, err
+	}
+
+	if response.StatusCode != 200 {
+		return issue, errors.New(string(body))
 	}
 
 	/*== @section ===========*/
@@ -95,6 +102,9 @@ func GetIssues (searchParams url.Values) ([]types.Issue, error) {
 		return issues, err
 	}
 	defer response.Body.Close()
+
+	/*== @section ===========*/
+	/*=======================*/
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
@@ -142,9 +152,16 @@ func GetComments (issueIid uint64, repositoryId uint64) ([]types.Comment, error)
 	}
 	defer response.Body.Close()
 
+	/*== @section ===========*/
+	/*=======================*/
+
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return comments, err
+	}
+
+	if response.StatusCode != 200 {
+		return comments, errors.New(string(body))
 	}
 
 	/*== @section ===========*/
@@ -184,6 +201,9 @@ func GetRepositoryInformation () (types.Project, error) {
 		return project, err
 	}
 	defer response.Body.Close()
+
+	/*== @section ===========*/
+	/*=======================*/
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
@@ -226,13 +246,16 @@ func GetCurrentUser () (types.User, error) {
 	}
 	defer response.Body.Close()
 
-	if response.StatusCode != 200 {
-		return user, errors.New("The current user information could not be retrieved")
-	}
+	/*== @section ===========*/
+	/*=======================*/
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return user, err
+	}
+
+	if response.StatusCode != 200 {
+		return user, errors.New(string(body))
 	}
 
 	/*== @section ===========*/
