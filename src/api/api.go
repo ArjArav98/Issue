@@ -20,6 +20,7 @@ var gitlabApiEndpoints map[string]string = map[string]string{
 	"get-single-issue": "/projects/%v/issues/%v",
 	"get-project-information": "/projects/%v",
 	"get-issue-comments": "/projects/%v/issues/%v/notes",
+	"get-current-user": "/user",
 	"list-issues": "/projects/%v/issues",
 }
 
@@ -76,8 +77,7 @@ func GetIssues (searchParams url.Values) ([]types.Issue, error) {
 	/*== @section ===========*/
 	/*=======================*/
 
-	url, err := generateRequestUrl("get-issue-issues", queryParams,
-					repositoryId, issueIid)
+	url, err := generateRequestUrl("get-issues", searchParams)
 	if err != nil {
 		return issues, err
 	}
@@ -182,6 +182,44 @@ func GetRepositoryInformation () (types.Project, error) {
 	}
 
 	return project, nil
+}
+
+func GetCurrentUser () (types.User, error) {
+	/*== @section ===========*/
+	/*=======================*/
+
+	var user types.User
+	queryParams := url.Values{}
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	url, err := generateRequestUrl("get-current-user", queryParams)
+	if err != nil {
+		return user, err
+	}
+
+	response, err := performGetRequest(url)
+	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return user, errors.New("The current user information could not be retrieved")
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return user, err
+	}
+
+	/*== @section ===========*/
+	/*=======================*/
+
+	err = user.FromJson(body)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
 
 /*---------------------------*/

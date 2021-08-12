@@ -69,6 +69,15 @@ func (comment *Comment) FromJson (stringContent []byte) error {
 	return nil
 }
 
+func (user *User) FromJson (stringContent []byte) error {
+	err := json.Unmarshal(stringContent, user)
+	if err != nil {
+		return errors.New("The raw data for a User could not be parsed into JSON")
+	}
+
+	return nil
+}
+
 func (project *Project) FromJson (stringContent []byte) error {
 	err := json.Unmarshal(stringContent, project)
 	if err != nil {
