@@ -34,6 +34,25 @@ func BeautifyIssue (issue types.Issue) string {
 	return builder.String()
 }
 
+func BeautifyIssueList (issues []types.Issue) string {
+	var builder strings.Builder
+
+	for _, issue := range issues {
+		builder.WriteString(fmt.Sprintf(`
+(For detailed view; issues show %v)
+TITLE 	 -  %v
+ASSIGNEE -  %v (%v)
+LABELS 	 -  %v
+STATE 	 -  %v
+WEB URL  -  %v
+
+	`, issue.Iid, issue.Title, issue.Assignee.Name, issue.Assignee.Username,
+	   strings.Join(issue.Labels, ", "), issue.State, issue.WebUrl))
+	}
+
+	return builder.String()
+}
+
 func BeautifyComments (comments []types.Comment) string {
 	var builder strings.Builder
 	var userCommentsCount int = 0

@@ -18,6 +18,9 @@ func main () {
 		return
 	}
 
+	/*==============*/
+	/* SHOW COMMAND */
+	/*==============*/
 	if args[0] == "show" {
 		if noFurtherArguments(args[1:]) {
 			printError(errors.New("Command needs at least one more argument"))
@@ -46,6 +49,9 @@ func main () {
 		return
 	}
 
+	/*==============*/
+	/* LIST COMMAND */
+	/*==============*/
 	if args[0] == "list" {
 		showAllIssues(args[1:])
 	} else {
@@ -115,7 +121,7 @@ func showAllIssues (searchArgs []string) {
 	/*== @section ===========*/
 	/*=======================*/
 
-	fmt.Println(issues)
+	fmt.Println(format.BeautifyIssueList(issues))
 }
 
 /*-----------------*/
