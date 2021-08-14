@@ -8,6 +8,7 @@ import (
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
 	"github.com/ArjArav98/Issue/src/parse"
+	"github.com/ArjArav98/Issue/src/defaults"
 )
 
 func main () {
@@ -40,12 +41,14 @@ func main () {
 
 		if args[1] == "--no-comments" {
 			showIssueWithComments(args[2], true, false)
+			return
 		}
 		if args[1] == "--only-comments" {
 			showIssueWithComments(args[2], false, true)
+			return
 		}
 
-		printError(errors.New("Command not recognised"))
+		showIssueWithComments(args[1], true, true)
 		return
 	}
 
@@ -53,7 +56,21 @@ func main () {
 	/* LIST COMMAND */
 	/*==============*/
 	if args[0] == "list" {
-		showAllIssues(args[1:])
+		if noFurtherArguments(args[1:]) {
+			showAllIssues(args[1:])
+			return
+		}
+
+		if onlyOneFurtherArgument(args[1:]) {
+			if args[1] == "--my-issues" {
+				showAllIssues(defaults.ArgsForCurrentUserIssues())
+				return
+			}
+			if args[1] == "--my-open-issues" {
+				showAllIssues(defaults.ArgsForCurrentUserOpenIssues())
+				return
+			}
+		}
 	} else {
 		printError(errors.New("Command not recognised"))
 	}
