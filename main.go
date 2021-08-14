@@ -70,7 +70,13 @@ func main () {
 				showAllIssues(defaults.ArgsForCurrentUserOpenIssues())
 				return
 			}
+
+			printError(errors.New("Search parameter not recognised"))
+			return
 		}
+
+		showAllIssues(args[1:])
+		return
 	} else {
 		printError(errors.New("Command not recognised"))
 	}
