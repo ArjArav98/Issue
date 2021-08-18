@@ -20,18 +20,25 @@ func main () {
 		return
 	}
 
-	/*==============*/
-	/* INIT COMMAND */
-	/*==============*/
-
+	/*======*/
+	/* INIT */
+	/*======*/
 	if args[0] == "init" {
 		createEmptyConfigFile()
 		return
 	}
 
-	/*==============*/
-	/* SHOW COMMAND */
-	/*==============*/
+	/*=========*/
+	/* VERSION */
+	/*=========*/
+	if args[0] == "version" {
+		fmt.Println("0.1.0 (Beta)")
+		return
+	}
+
+	/*======*/
+	/* SHOW */
+	/*======*/
 	if args[0] == "show" {
 		if noFurtherArguments(args[1:]) {
 			printError(errors.New("Command needs at least one more argument"))
@@ -62,9 +69,9 @@ func main () {
 		return
 	}
 
-	/*==============*/
-	/* LIST COMMAND */
-	/*==============*/
+	/*======*/
+	/* LIST */
+	/*======*/
 	if args[0] == "list" {
 		if noFurtherArguments(args[1:]) {
 			showAllIssues(args[1:])
