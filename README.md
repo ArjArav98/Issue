@@ -12,15 +12,25 @@ To combat all this, **Issue** is a simple CLI utility for viewing, editing and c
 * Run `issue init` to verify the successful installation!
 
 # Usage
-* **Listing all issues** - `issue list`
-   * For filtering this list, add search parameters. Examples below.
-      * `issue list --assignee_username darthvader --labels "Doing,Backend"`
-      * `issue list --state opened --created_before 2019-03-15T08:00:00Z`
-      * You can add as many parameters as you want. For the full list, click here.
-   * There are two available shortcuts to avoid typing long searches.
-      * 
+
+`issue list` - Lists all issues.
+
+`issue list --assignee_username darth.vader69 --labels "Doing,Backend"` - Lists all issues after applying search parameters. For full list of search parameters and examples, click here.
+
+`issue list --my-open-issues` - Shortcut which displays all issues assigned to you, which are open.
+
+`issue list --my-issues` - Shortcut which displays all issues assigned to you.
+
 ------------
-* **Seeing a single issue in detail** - `issue show <issue_id>`
-   * Seeing issue with comments/notes - `issue show --with-comments <issue_id>`
-   * Seeing only comments - `issue show --no-comments <issue_id>`
-   * 
+
+`issue show <issue_id>` - Displays the selected issue in detail.
+
+`issue show --with-comments <issue_id>` - Displays the selected issue in detail, along with its comments.
+
+`issue show --no-comments <issue_id>` - Displays the selected issue's comments only.
+
+------------
+
+`issue init` - Creates an empty config file in the current directory.
+
+`issue version` - Displays the current version of the tool.
