@@ -27,14 +27,15 @@ for env_to_build_for in "${envs_to_build_for[@]}"; do
 	goos=${env_to_build_for%;*}
 	goarch=${env_to_build_for##*;}
 
-	env GOOS=$goos GOARCH=$goarch go install
-	echo "Finished building for $goos $goarch..."
+	mkdir -p $GOPATH/bin/${goos}_${goarch}
 
-	if [[ ($goos == $current_goos) && ($goarch == $current_goarch) ]]; then
-		mkdir -p $GOPATH/bin/$goos_$goarch
-		mv $GOPATH/bin/Issue $GOPATH/bin/$goos_$goarch
-		echo "Yeah, this happened."
+	if [[ $goos == "windows" ]]; then
+		env GOOS=$goos GOARCH=$goarch go build -o $GOPATH/bin/${goos}_${goarch}/issue.exe main.go
+	else
+		env GOOS=$goos GOARCH=$goarch go build -o $GOPATH/bin/${goos}_${goarch}/issue main.go
 	fi
+
+	echo "Finished building for $goos $goarch..."
 done
 
 #=======#
