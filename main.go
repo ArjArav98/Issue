@@ -9,6 +9,7 @@ import (
 	"github.com/ArjArav98/Issue/src/format"
 	"github.com/ArjArav98/Issue/src/parse"
 	"github.com/ArjArav98/Issue/src/defaults"
+	"github.com/ArjArav98/Issue/src/config"
 )
 
 func main () {
@@ -16,6 +17,15 @@ func main () {
 
 	if noFurtherArguments(args) {
 		printError(errors.New("Command needs at least one argument"))
+		return
+	}
+
+	/*==============*/
+	/* INIT COMMAND */
+	/*==============*/
+
+	if args[0] == "init" {
+		createEmptyConfigFile()
 		return
 	}
 
@@ -145,6 +155,13 @@ func showAllIssues (searchArgs []string) {
 	/*=======================*/
 
 	fmt.Println(format.BeautifyIssueList(issues))
+}
+
+func createEmptyConfigFile () {
+	err := config.CreateEmptyTemplateFile()
+	if err!=nil {
+		printError(err)
+	}
 }
 
 /*-----------------*/
