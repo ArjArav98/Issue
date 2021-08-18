@@ -50,6 +50,12 @@ func CreateEmptyTemplateFile() error {
 	"RepositoryNamespace": ""
 }`
 
+	/* We check if a file already exists. */
+	if _, err := os.Stat("issues.config.json"); err == nil {
+		return errors.New("There is already an issues.config.json present in this directory")
+	}
+
+	/* We create the file. */
 	file, err := os.OpenFile("issues.config.json", os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return errors.New("The init command could not create the issues.config.json file")
