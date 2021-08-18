@@ -8,17 +8,11 @@ import (
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
 	"github.com/ArjArav98/Issue/src/parse"
-	"github.com/ArjArav98/Issue/src/config"
 	"github.com/ArjArav98/Issue/src/defaults"
 )
 
 func main () {
 	args := os.Args[1:]
-
-	if config.DoesntExist() {
-		printError(config.DoesntExistError)
-		return
-	}
 
 	if noFurtherArguments(args) {
 		printError(errors.New("Command needs at least one argument"))
