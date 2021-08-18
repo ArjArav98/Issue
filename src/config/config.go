@@ -20,25 +20,24 @@ type Config struct {
 
 func Get () (Config, error) {
 	var config Config
-	fileName := "config.json"
-	contents, err := ioutil.ReadFile(fileName)
+	contents, err := ioutil.ReadFile("issues.config.json")
 
 	if err != nil {
 		return config, errors.New(doesntExistError)
 	}
 
 	if !json.Valid(contents) {
-		return config, errors.New("The config.json file contains invalid JSON")
+		return config, errors.New("The issues.config.json file contains invalid JSON")
 	}
 
 	err = json.Unmarshal(contents, &config)
 
 	if err != nil {
-		return config, errors.New("The config.json file for this repository could not be parsed")
+		return config, errors.New("The issues.config.json file for this repository could not be parsed")
 	}
 
 	if configDoesntContainAllRequiredData(config) {
-		return config, errors.New("The config.json file does not contain all required data")
+		return config, errors.New("The issues.config.json file does not contain all required data")
 	}
 
 	return config, nil
@@ -51,9 +50,9 @@ func CreateEmptyTemplateFile() error {
 	"RepositoryNamespace": ""
 }`
 
-	file, err := os.OpenFile("config.json", os.O_RDWR|os.O_CREATE, 0755)
+	file, err := os.OpenFile("issues.config.json", os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
-		return errors.New("The init command could not create the config.json file")
+		return errors.New("The init command could not create the issues.config.json file")
 	}
 
 	fmt.Fprintf(file, contents)
@@ -74,9 +73,9 @@ func configDoesntContainAllRequiredData (config Config) bool {
 /* PRIVATE VARIABLES */
 /*-------------------*/
 
-var doesntExistError string = `A config.json file could not be found.
+var doesntExistError string = `A issues.config.json file could not be found.
 
-Create a config.json file at the root of your repository, with the format:-
+Create a issues.config.json file at the root of your repository, with the format:-
 
 {
  "BearerToken": <GITLAB_BEARER_TOKEN>,
@@ -89,4 +88,5 @@ Create a config.json file at the root of your repository, with the format:-
 - If you're using a hosted version of GitLab, the HostUrl should be the URL
   to the hosted instance.
 - The RepositoryNamespace must be of the format "<user>/<repo_name>" or 
-  "<group>/<repo_name>" (ex; ArjArav98/Issue or Google/gmail)`
+  "<group>/<repo_name>" (ex; ArjArav98/Issue or Google/gmail)
+- Can be added to the .gitignore file.`
