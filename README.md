@@ -1,4 +1,4 @@
-# Issue (Beta)
+# Issue <sup>(Work In Progress)</sup>
 Sometimes, if you're feverishly working on a project in your code editor or CLI, it can be **frustrating as hell** to keep switching to the browser to view task requirements in your issue tracker.
 
 Plus, annoyingly, a lot of issue trackers do not have good support for keyboard shortcuts. You have to use the mouse a lot.
