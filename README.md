@@ -6,10 +6,21 @@ Plus, annoyingly, a lot of issue trackers do not have good support for keyboard 
 To combat all this, **Issue** is a simple CLI utility for viewing, editing and creating GitLab project issues _(Support for Jira, GitHub and more coming soon!)_.
 
 # Installation
-* Clone this repository.
-* In the root directory, run `go build -o issue main.go`.
-    * Add the current directory path to your `PATH` environment variable.
-* Run `issue init` to verify the successful installation!
+* Download the executable corresponding to your OS from the table below.
+
+   | OS & Architecture | Link |
+   |---|---|
+   |Darwin (Mac OS) AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/darwin_amd64/issue) |
+   |Darwin (Mac OS) ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/darwin_arm64/Issue) |
+   |Linux 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_386/Issue) |
+   |Linux AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_amd64/issue) |
+   |Linux ARM| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm/Issue) |
+   |Linux ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm64/Issue) |
+   |Windows 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/windows_386/Issue.exe) |
+   |Windows AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/windows_amd64/issue.exe) |
+
+* Add the path of the directory, in which the executable is present, to your `PATH` environment variable.
+* Run `issue version` to verify the successful installation!
 
 # Usage
 
