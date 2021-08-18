@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -11,6 +12,12 @@ type Config struct {
 	HostUrl string
 	RepositoryNamespace string
 }
+
+/*-------------------*/
+/* EXPOSED VARIABLES */
+/*-------------------*/
+
+var DoesntExistError error = errors.New(`A config.json file could not be found`)
 
 /*-------------------*/
 /* EXPOSED FUNCTIONS */
@@ -36,4 +43,11 @@ func Get () (Config, error) {
 	}
 
 	return config, nil
+}
+
+func DoesntExist () bool {
+	if _, err := os.Stat("config.json"); os.IsExist(err) {
+		return false
+	}
+	return true
 }
