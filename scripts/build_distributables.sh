@@ -46,3 +46,16 @@ echo "Cleared the dist/ folder."
 
 mv $GOPATH/bin/* dist/
 echo "Moved all distributable folders to the dist/ directory."
+
+#=======#
+# We change the permissions for all generated files to 777.
+#=======#
+for folder_to_check in $(ls dist/); do
+	
+	files_to_rename=$(ls dist/$folder_to_check)
+	for file_to_rename in ${files_to_rename[@]}; do
+		chmod 777 dist/${folder_to_check}/${file_to_rename}
+	done
+
+done
+echo "Finished modifying permissions for all generated files."
