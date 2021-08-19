@@ -91,6 +91,7 @@ func main () {
 			}
 
 			printError(errors.New("Search parameter not recognised"))
+			showHelpMenu()
 			return
 		}
 
@@ -98,6 +99,7 @@ func main () {
 		return
 	} else {
 		printError(errors.New("Command not recognised"))
+		showHelpMenu()
 	}
 }
 
@@ -214,7 +216,36 @@ func argumentNotNumeric (argument string) bool {
 /*-----------------*/
 
 func showHelpMenu () {
-	fmt.Println("Usage: issue COMMAND [OPTION] [ISSUE_ID]")
+	fmt.Println(`
+Usage: issue [COMMAND] [ARGS]
+
+COMMANDS
+--------
+list	: lists all issues
+	  ARGS:    Optional OPTIONS and SEARCH PARAMS.
+	  OPTIONS: --my-open-issues 
+	  	   --my-issues 
+	  SEARCH   
+	  PARAMS:  --assignee_id (integer/Any/None)
+	  	   --assignee_username (comma-separated-strings)
+		   --created_after (datetime)
+		   --created_before (datetime)
+		   --updated_after (datetime)
+		   --updated_before (datetime)
+		   --labels (comma-separated-strings)
+		   --search (string)
+		   --order_by (created_at/updated_at/)
+		   --state (opened/closed)
+	  SAMPLE
+	  CMDS:    issue list --my-open-issues --labels backend,doing
+	  	   issue list --assignee_username sauron123 --assignee_username frodo99
+
+show	: displays an issue in detail
+	  ARGS:    
+init	: generates an empty config in current directory
+version	: displays current version
+`)
+
 }
 
 func printError (err error) {
