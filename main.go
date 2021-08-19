@@ -19,6 +19,7 @@ func main () {
 
 	if noFurtherArguments(args) {
 		printError(errors.New("Command needs at least one argument"))
+		showHelpPrompt()
 		return
 	}
 
@@ -39,17 +40,27 @@ func main () {
 	}
 
 	/*======*/
+	/* HELP */
+	/*======*/
+	if args[0] == "help" {
+		showHelpMenu()
+		return
+	}
+
+	/*======*/
 	/* SHOW */
 	/*======*/
 	if args[0] == "show" {
 		if noFurtherArguments(args[1:]) {
 			printError(errors.New("Command needs at least one more argument"))
+			showHelpPrompt()
 			return
 		}
 
 		if onlyOneFurtherArgument(args[1:]) {
 			if argumentNotNumeric(args[1]) {
 				printError(errors.New("The last argument must be a valid integer ID"))
+				showHelpPrompt()
 				return
 			}
 
@@ -99,18 +110,19 @@ func main () {
 		return
 	} else {
 		printError(errors.New("Command not recognised"))
-		showHelpMenu()
+		showHelpPrompt()
 	}
 }
 
-/*-----------------------*/
-/* API COMMAND FUNCTIONS */
-/*-----------------------*/
+
+
+/*********************/
+/* COMMAND FUNCTIONS */
+/*********************/
 
 func showIssueWithComments (issueIdString string, showIssue bool, showComments bool) {
 	/*== @section ===========*/
 	/*=======================*/
-
 	issueId, err := strconv.ParseInt(issueIdString, 10, 32)
 	if err != nil {
 		printError(errors.New("Issue ID must be a valid number"))
@@ -119,7 +131,6 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 
 	/*== @section ===========*/
 	/*=======================*/
-
 	issue, err := api.GetIssue(uint64(issueId))
 	if err != nil {
 		printError(err)
@@ -134,7 +145,6 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 
 	/*== @section ===========*/
 	/*=======================*/
-
 	var output strings.Builder
 
 	if showIssue {
@@ -150,7 +160,6 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 func showAllIssues (searchArgs []string) {
 	/*== @section ===========*/
 	/*=======================*/
-
 	queryParams, err := parse.CliArgumentsToQueryParams(searchArgs)
 	if err!=nil {
 		printError(err)
@@ -159,7 +168,6 @@ func showAllIssues (searchArgs []string) {
 
 	/*== @section ===========*/
 	/*=======================*/
-
 	issues, err := api.GetIssues(queryParams)
 	if err!= nil {
 		printError(err)
@@ -168,7 +176,6 @@ func showAllIssues (searchArgs []string) {
 
 	/*== @section ===========*/
 	/*=======================*/
-
 	pipeInputToLess(format.BeautifyIssueList(issues))
 }
 
@@ -179,45 +186,8 @@ func createEmptyConfigFile () {
 	}
 }
 
-/*------------------*/
-/* OUTPUT FUNCTIONS */
-/*------------------*/
-
-func pipeInputToLess (input string) {
-	cmd := exec.Command("less")
-	cmd.Stdin = strings.NewReader(input)
-	cmd.Stdout = os.Stdout
-
-	err := cmd.Run()
-	if err!=nil {
-		printError(err)
-	}
-}
-
-/*-----------------*/
-/* CHECK FUNCTIONS */
-/*-----------------*/
-
-func noFurtherArguments (args []string) bool {
-	return len(args) == 0
-}
-
-func onlyOneFurtherArgument (args []string) bool {
-	return len(args) == 1
-}
-
-func argumentNotNumeric (argument string) bool {
-	_, err := strconv.ParseFloat(argument, 10)
-	return err != nil
-}
-
-/*-----------------*/
-/* ERROR FUNCTIONS */
-/*-----------------*/
-
 func showHelpMenu () {
-	fmt.Println(`
-USAGE: issue [COMMAND] [ARGS]
+	fmt.Println(`USAGE: issue [COMMAND] [ARGS]
 
 +----------+
 | COMMANDS |
@@ -254,10 +224,50 @@ show	: displays an issue in detail
 
 init	: generates an empty config in current directory
 version	: displays current version
+help	: dispays the help menu
 `)
-
 }
+
+/*-----------------*/
+/* CHECK FUNCTIONS */
+/*-----------------*/
+
+func noFurtherArguments (args []string) bool {
+	return len(args) == 0
+}
+
+func onlyOneFurtherArgument (args []string) bool {
+	return len(args) == 1
+}
+
+func argumentNotNumeric (argument string) bool {
+	_, err := strconv.ParseFloat(argument, 10)
+	return err != nil
+}
+
+/*-----------------*/
+/* ERROR FUNCTIONS */
+/*-----------------*/
 
 func printError (err error) {
 	fmt.Printf("ERROR: %v.\n", err)
+}
+
+func showHelpPrompt () {
+	fmt.Println("Enter 'issue help' to see correct usage for commands.")
+}
+
+/*------------------*/
+/* OUTPUT FUNCTIONS */
+/*------------------*/
+
+func pipeInputToLess (input string) {
+	cmd := exec.Command("less")
+	cmd.Stdin = strings.NewReader(input)
+	cmd.Stdout = os.Stdout
+
+	err := cmd.Run()
+	if err!=nil {
+		printError(err)
+	}
 }
