@@ -217,10 +217,12 @@ func argumentNotNumeric (argument string) bool {
 
 func showHelpMenu () {
 	fmt.Println(`
-Usage: issue [COMMAND] [ARGS]
+USAGE: issue [COMMAND] [ARGS]
 
-COMMANDS
---------
++----------+
+| COMMANDS |
++----------+
+
 list	: lists all issues
 	  ARGS:    Optional OPTIONS and SEARCH PARAMS.
 	  OPTIONS: --my-open-issues 
@@ -239,6 +241,7 @@ list	: lists all issues
 	  SAMPLE
 	  CMDS:    issue list --my-open-issues --labels backend,doing
 	  	   issue list --assignee_username sauron123 --assignee_username frodo99
+
 show	: displays an issue in detail
 	  ARGS:    Optional OPTIONS and required ISSUE ID.
 	  OPTIONS: --no-comments
@@ -248,6 +251,7 @@ show	: displays an issue in detail
 	  SAMPLE
 	  CMDS:    issue show 42
 	  	   issue show --no-comments 666
+
 init	: generates an empty config in current directory
 version	: displays current version
 `)
