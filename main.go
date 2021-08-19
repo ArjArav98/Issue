@@ -239,9 +239,15 @@ list	: lists all issues
 	  SAMPLE
 	  CMDS:    issue list --my-open-issues --labels backend,doing
 	  	   issue list --assignee_username sauron123 --assignee_username frodo99
-
 show	: displays an issue in detail
-	  ARGS:    
+	  ARGS:    Optional OPTIONS and required ISSUE ID.
+	  OPTIONS: --no-comments
+	  	   --only-comments
+	  ISSUE
+	  ID:      Any positive integer
+	  SAMPLE
+	  CMDS:    issue show 42
+	  	   issue show --no-comments 666
 init	: generates an empty config in current directory
 version	: displays current version
 `)
