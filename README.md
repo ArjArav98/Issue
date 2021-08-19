@@ -45,3 +45,5 @@ To combat all this, **Issue** is a simple CLI utility for viewing, editing and c
 `issue init` - Creates an empty config file in the current directory.
 
 `issue version` - Displays the current version of the tool.
+
+`issue help` - Displays a menu with usage instructions for each command.
