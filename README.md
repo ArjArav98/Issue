@@ -11,12 +11,12 @@ To combat all this, **Issue** is a simple CLI utility for viewing, editing and c
    | OS & Architecture | Link |
    |---|---|
    |Darwin (Mac OS) AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/darwin_amd64/issue) |
-   |Darwin (Mac OS) ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/darwin_arm64/Issue) |
-   |Linux 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_386/Issue) |
+   |Darwin (Mac OS) ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/darwin_arm64/issue) |
+   |Linux 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_386/issue) |
    |Linux AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_amd64/issue) |
-   |Linux ARM| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm/Issue) |
-   |Linux ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm64/Issue) |
-   |Windows 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/windows_386/Issue.exe) |
+   |Linux ARM| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm/issue) |
+   |Linux ARM64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/linux_arm64/issue) |
+   |Windows 386| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/windows_386/issue.exe) |
    |Windows AMD64| [Download](https://github.com/ArjArav98/Issue/raw/master/dist/windows_amd64/issue.exe) |
 
 * Add the path of the directory, in which the executable is present, to your `PATH` environment variable.
