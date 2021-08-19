@@ -3,8 +3,10 @@ package main
 import (
 	"os"
 	"fmt"
+	"strings"
 	"strconv"
 	"errors"
+	"os/exec"
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
 	"github.com/ArjArav98/Issue/src/parse"
@@ -131,12 +133,16 @@ func showIssueWithComments (issueIdString string, showIssue bool, showComments b
 	/*== @section ===========*/
 	/*=======================*/
 
+	var output strings.Builder
+
 	if showIssue {
-		fmt.Println(format.BeautifyIssue(issue))
+		output.Write( []byte(format.BeautifyIssue(issue)) )
 	}
 	if showComments {
-		fmt.Println(format.BeautifyComments(comments))
+		output.Write( []byte(format.BeautifyComments(comments)) )
 	}
+
+	pipeInputToLess(output.String())
 }
 
 func showAllIssues (searchArgs []string) {
@@ -161,11 +167,26 @@ func showAllIssues (searchArgs []string) {
 	/*== @section ===========*/
 	/*=======================*/
 
-	fmt.Println(format.BeautifyIssueList(issues))
+	pipeInputToLess(format.BeautifyIssueList(issues))
 }
 
 func createEmptyConfigFile () {
 	err := config.CreateEmptyTemplateFile()
+	if err!=nil {
+		printError(err)
+	}
+}
+
+/*------------------*/
+/* OUTPUT FUNCTIONS */
+/*------------------*/
+
+func pipeInputToLess (input string) {
+	cmd := exec.Command("less")
+	cmd.Stdin = strings.NewReader(input)
+	cmd.Stdout = os.Stdout
+
+	err := cmd.Run()
 	if err!=nil {
 		printError(err)
 	}
