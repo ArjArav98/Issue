@@ -82,7 +82,7 @@ issue list --assignee_username sauron123 --assignee_username frodo99
 ```
 
 # Potential Contributions
-Feel free to submit an MR for a feature addition.
+Feel free to submit an MR for a feature addition or bug.
 
 # Tools Used
 * Gitlab APIs
