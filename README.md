@@ -1,18 +1,17 @@
 # Issue
-Sometimes, if you're feverishly working on a project in your code editor or CLI, it can be **frustrating as hell** to keep switching to the browser to view task requirements in your issue tracker.
-
-Plus, annoyingly, a lot of issue trackers do not have good support for keyboard shortcuts. You have to use the mouse a lot.
+It can sometimes be _frustrating as hell_ to switch to your browser from your IDE or terminal to view task requirements. It can be even more irritating when these websites don't have proper keyboard support.
 
 To combat all this, **Issue** is a simple CLI utility for viewing GitLab project issues _(Support for GitHub, Jira, Clubhouse and more coming soon!)_.
 
-* Installation
-* Usage
-   * Listing Issues
-   * Viewing Single Issues
-   * Miscellaneous
-   * Listings Search Parameters
-* Potential Contributions
-* Tools Used
+
+* [Installation](https://github.com/ArjArav98/Issue/blob/master/README.md#installation)
+* [Usage](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+   * [Listing Issues](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+   * [Viewing Single Issues](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+   * [Miscellaneous](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+   * [Listings Search Parameters](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+* [Potential Contributions](https://github.com/ArjArav98/Issue/blob/master/README.md#potential-contributions)
+* [Tools Used](https://github.com/ArjArav98/Issue/blob/master/README.md#tools-used)
 
 # Installation
 * Download the executable corresponding to your OS from the table below.
