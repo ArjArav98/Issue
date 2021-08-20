@@ -11,6 +11,7 @@ To combat all this, **Issue** is a simple CLI utility for viewing and marking Gi
    * [Viewing Single Issues](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
    * [Miscellaneous](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
    * [Listings Search Parameters](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
+* [Troubleshooting & Common Errors](https://github.com/ArjArav98/Issue/blob/master/README.md#troubleshooting--common-errors)
 * [Potential Contributions](https://github.com/ArjArav98/Issue/blob/master/README.md#potential-contributions)
 * [Tools Used](https://github.com/ArjArav98/Issue/blob/master/README.md#tools-used)
 
