@@ -4,7 +4,8 @@ It can sometimes be _frustrating as hell_ to switch to your browser from your ID
 To combat all this, **Issue** is a simple CLI utility for viewing GitLab project issues _(Support for GitHub, Jira, Clubhouse and more coming soon!)_.
 
 
-* [Installation](https://github.com/ArjArav98/Issue/blob/master/README.md#installation)
+* [Quickstart](https://github.com/ArjArav98/Issue/blob/master/README.md#installation)
+  * [Initial Setup](https://github.com/ArjArav98/Issue/blob/master/README.md#initial-setup)
 * [Usage](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
    * [Listing Issues](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
    * [Viewing Single Issues](https://github.com/ArjArav98/Issue/blob/master/README.md#usage)
@@ -13,7 +14,7 @@ To combat all this, **Issue** is a simple CLI utility for viewing GitLab project
 * [Potential Contributions](https://github.com/ArjArav98/Issue/blob/master/README.md#potential-contributions)
 * [Tools Used](https://github.com/ArjArav98/Issue/blob/master/README.md#tools-used)
 
-# Installation
+# Quickstart
 * Download the executable corresponding to your OS from the table below.
 
    | OS & Architecture | Link |
@@ -30,7 +31,7 @@ To combat all this, **Issue** is a simple CLI utility for viewing GitLab project
 * Add the path of the directory, in which the executable is present, to your `PATH` environment variable.
 * Run `issue version` to verify the successful installation!
 
-# Initial Setup
+### Initial Setup
 * Run `issue init`.
 * Open the generated `issues.config.json` file.
   * [Generate a Gitlab API token.](https://gitlab.com/-/profile/personal_access_tokens) Only provide read_* permissions to the token. Paste your token as the value for the `BearerToken` attribute in the config file.
