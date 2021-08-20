@@ -1,7 +1,7 @@
 # Issue
 It can sometimes be _frustrating as hell_ to switch to your browser from your IDE or terminal to view task requirements. It can be even more irritating when these websites don't have proper keyboard support.
 
-To combat all this, **Issue** is a simple CLI utility for viewing GitLab project issues _(Support for creating and editing issues coming soon!)_.
+To combat all this, **Issue** is a simple CLI utility for viewing and marking GitLab project issues _(Support for Jira, Github and Clubhouse coming soon!)_.
 
 
 * [Quickstart](https://github.com/ArjArav98/Issue/blob/master/README.md#installation)
