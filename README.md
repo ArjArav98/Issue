@@ -30,6 +30,13 @@ To combat all this, **Issue** is a simple CLI utility for viewing GitLab project
 * Add the path of the directory, in which the executable is present, to your `PATH` environment variable.
 * Run `issue version` to verify the successful installation!
 
+# Initial Setup
+* Run `issue init`.
+* Open the generated `issues.config.json` file.
+  * [Generate a Gitlab API token.](https://gitlab.com/-/profile/personal_access_tokens) Only provide read_* permissions to the token. Paste your token as the value for the `BearerToken` attribute in the config file.
+  * The value for the `HostUrl` attribute must be the full domain URL at which Gitlab is hosted for you (ex; `https://mycompany.com/gitlab` or `https://gitlab.mycompany.com`). If you are using the cloud (normal) version of Gitlab, use `https://gitlab.com`.
+  * The value for the `RepositoryNamespace` attribute must be the repository name (ex; ArjArav98/Issue or stark-industries/ironmansuit).
+
 # Usage
 |Issue Listings Commands|Description|
 |---|---|
@@ -48,7 +55,7 @@ To combat all this, **Issue** is a simple CLI utility for viewing GitLab project
 |---|---|
 |`issue init` | Creates an empty config file in the current directory.|
 |`issue version` | Displays the current version of the tool.|
-|`issue help` | Displays a menu with usage instructions for each command.|
+|`issue help` | Displays a help menu with usage instructions for each command.|
 
 ---------
 ### Listings Search Parameters
