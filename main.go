@@ -10,7 +10,6 @@ import (
 	"github.com/ArjArav98/Issue/src/api"
 	"github.com/ArjArav98/Issue/src/format"
 	"github.com/ArjArav98/Issue/src/parse"
-	"github.com/ArjArav98/Issue/src/defaults"
 	"github.com/ArjArav98/Issue/src/config"
 )
 
@@ -88,21 +87,6 @@ func main () {
 	if args[0] == "list" {
 		if noFurtherArguments(args[1:]) {
 			showAllIssues(args[1:])
-			return
-		}
-
-		if onlyOneFurtherArgument(args[1:]) {
-			if args[1] == "--my-issues" {
-				showAllIssues(defaults.ArgsForCurrentUserIssues())
-				return
-			}
-			if args[1] == "--my-open-issues" {
-				showAllIssues(defaults.ArgsForCurrentUserOpenIssues())
-				return
-			}
-
-			printError(errors.New("Search parameter not recognised"))
-			showHelpMenu()
 			return
 		}
 
