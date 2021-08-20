@@ -1,30 +1,30 @@
 package main
 
 import (
-	"os"
 	"fmt"
 	"errors"
 	"os/exec"
 	"runtime"
 )
 
-func openUrlInBrowser (url string) err {
+func openUrlInBrowser (url string) error {
 	var currentOs string = runtime.GOOS
-	var openCmd *runtime.Cmd
+	var err error
 
 	switch currentOs {
-		case "darwin": openCmd = exec.Command("open")
-		case "windows": openCmd = exec.Command("open")
-		case "linux": openCmd = exec.Command("open")
+		case "darwin": err = exec.Command("open", url).Start()
+		case "windows": err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+		case "linux": err = exec.Command("xdg-open", url).Start()
 		default: return errors.New("Sorry dude, this OS is not supported yet :/")
 	}
 
-	openCmd.Stdin = strings.NewReader(url)
-	openCmd.Stdout = os.Stdout
-	err := openCmd.Run()
 	if err!=nil {
-		return errors.New("Unable to open authentication URL in browser")
+		return errors.New(fmt.Sprintf("Unable to open authentication URL in browser: %v", err))
 	}
 
 	return nil
+}
+
+func main () {
+	
 }
