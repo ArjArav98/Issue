@@ -7,6 +7,14 @@ import (
 	"runtime"
 )
 
+func getClientId () string {
+	return "ISSUE_OAUTH_CLIENT_ID"
+}
+
+func getClientSecret () string {
+	return "ISSUE_OAUTH_CLIENT_SECRET"
+}
+
 func openUrlInBrowser (url string) error {
 	var currentOs string = runtime.GOOS
 	var err error
