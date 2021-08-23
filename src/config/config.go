@@ -89,6 +89,8 @@ Create a issues.config.json file at the root of your repository, with the format
  "RepositoryNamespace": <NAMESPACE>
 }
 
+You could alternatively run 'issue init'.
+
 - If you're using the cloud version of GitLab (the normal one), the HostUrl
   should be https://gitlab.com.
 - If you're using a hosted version of GitLab, the HostUrl should be the URL

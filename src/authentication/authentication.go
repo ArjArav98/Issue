@@ -7,6 +7,10 @@ import (
 	"runtime"
 )
 
+/*-------------------*/
+/* PRIVATE FUNCTIONS */
+/*-------------------*/
+
 func getClientId () string {
 	return "ISSUE_OAUTH_CLIENT_ID"
 }

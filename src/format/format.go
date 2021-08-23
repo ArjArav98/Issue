@@ -39,7 +39,7 @@ func BeautifyIssueList (issues []types.Issue) string {
 
 	for _, issue := range issues {
 		builder.WriteString(fmt.Sprintf(`
-(For detailed view; issues show %v)
+(For detailed view; issue show %v)
 TITLE 	 -  %v
 ASSIGNEE -  %v (%v)
 LABELS 	 -  %v
