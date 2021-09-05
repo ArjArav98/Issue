@@ -86,7 +86,7 @@ issue list --assignee_username sauron123 --assignee_username frodo99
 * If you encounter a 'permission denied' message on Mac OS, you might have to change the permissions of the executable file to 711. Once this is over, you will have to go to `System Preferences -> Security & Privacy` and allow Issue to be 'opened anyway'.
 
 # Potential Contributions
-Feel free to submit an MR for a feature addition or bug.
+Feel free to submit a PR for a feature addition or bug.
 
 # Tools Used
 * Gitlab APIs
