@@ -86,10 +86,10 @@ issue list --assignee_username sauron123 --assignee_username frodo99
 
 # Troubleshooting & Common Errors
 * If you encounter a 'permission denied' message on Mac OS, you might have to change the permissions of the executable file to 711. Once this is over, you will have to go to `System Preferences -> Security & Privacy` and allow Issue to be 'opened anyway'.
-* If you encounter a 'no config present' error, please make sure you are at the root of the directory which has been initialised with a git repository.
+* If you encounter a 'no config present' error, please make sure you are at the root of a directory which has been initialised with a git repository.
 
 # Potential Contributions
-Feel free to submit a PR for a feature addition or bug.
+Feel free to submit a PR for a feature addition or bug. It would be great if you could submit an issue first so that we can discuss whether the potential PR fits within the general direction that the project is going in.
 
 # Tools Used
 * Gitlab APIs
