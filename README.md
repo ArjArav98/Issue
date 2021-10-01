@@ -82,6 +82,8 @@ issue list --my-open-issues --labels backend,doing --created_before --created_be
 issue list --assignee_username sauron123 --assignee_username frodo99
 ```
 
+**Tip:** You could also create aliases in your terminal for searches with multiple arguments.
+
 # Troubleshooting & Common Errors
 * If you encounter a 'permission denied' message on Mac OS, you might have to change the permissions of the executable file to 711. Once this is over, you will have to go to `System Preferences -> Security & Privacy` and allow Issue to be 'opened anyway'.
 
